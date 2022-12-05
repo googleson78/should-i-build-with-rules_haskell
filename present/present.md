@@ -46,7 +46,7 @@ revealOptions:
 
 * @tweag
 
-Notes:
+Note:
 ~One year of bazel at Tweag
 ~4-5 Haskell experience
 love to teach Haskell and Agda
@@ -63,7 +63,7 @@ Bazel started out as the internal build tool at Google.
 * a huge monorepo <!-- .element: class="fragment" data-fragment-index="1" -->
 * very slow builds <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Notes:
+Note:
 
 many languages - polyglot
 huge monorepo - lazy evaluation of builds
@@ -82,7 +82,7 @@ Bazel tries to be _**abstract**_
 
 <p class="fragment" data-fragment-index="2"> Bazel is <em><b>polyglot</b></em>.
 
-Notes:
+Note:
 
 not tied - core concepts:
 * dependencies (inputs)
@@ -121,7 +121,7 @@ Bazel tries to be _**declarative**_
   </li>
 </ul>
 
-Notes:
+Note:
 No manually specified order of execution
 
 ----
@@ -146,7 +146,7 @@ Bazel is _**artifact based**_
   </li>
 </ul>
 
-Notes:
+Note:
 Effectively requesting nodes in our graph
 
 What is a package?
@@ -173,7 +173,7 @@ Same inputs -> same output
 Enables remote caching and remote builds
 </p>
 
-Notes:
+Note:
 Sandboxes - can only access declared inputs
 
 Note that the system is **not** sandboxed - we can refer (absolute path) to /usr/bin/whatever
@@ -193,7 +193,7 @@ by Tweag <!-- .element: class="fragment" data-fragment-index="0" -->
 
 [haskell.build](https://haskell.build/)  <!-- .element: class="fragment" data-fragment-index="0" -->
 
-Notes:
+Note:
 disclosure: by Tweag
 
 ----
@@ -223,7 +223,7 @@ haskell_test(
 )
 ```
 
-Notes:
+Note:
 we've grouped `Foo` and `Bar` - by default bazel looks at targets as atomic unit, hence
 
 caching+parallelism will only happen at that level
@@ -251,7 +251,7 @@ There are a few different ways to get yourself a `ghc`:
 
 We can specify an LTS or use `stack`'s custom snapshot format and all the features it provides.
 
-Notes:
+Note:
 so adding hackage deps, git deps, etc
 
 these dependencies are built with cabal for compatibility Setup.hs
@@ -275,7 +275,7 @@ Instead of grouping whole packages into targets, we group individual modules int
 
 Cross-package module dependencies <!-- .element: class="fragment" data-fragment-index="2" -->.
 
-Notes:
+Note:
 bazel can only rebuild individual modules.
 
 cross-package module deps: not present in other build tools faik
@@ -298,7 +298,7 @@ haskell_module(
 )
 ```
 
-Notes:
+Note:
 
 boilerplate - duplicating all the imports
 
@@ -316,7 +316,7 @@ Use cases: <!-- .element: class="fragment" data-fragment-index="0" -->
 * support both build systems simultaneously <!-- .element: class="fragment" data-fragment-index="1" -->
 * gradually migrate to Bazel <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Notes:
+Note:
 
 originally for golang, supports extensions
 
@@ -330,7 +330,7 @@ both build systems: useful for tooling
 
 <p class="fragment" data-fragment-index="0"> Also updates <code>stack_snapshot</code></p>
 
-Notes:
+Note:
 
 updates stack_snapshot with packages found in .cabal
 
@@ -342,7 +342,7 @@ works quite nicely to get you 90% of the way there, but not everything e.g. Setu
 
 `gazelle` extension, automates the generation of `haskell_module` targets from existing `haskell_{library,binary,etc}` targets.
 
-Notes:
+Note:
 
 needs to scan hs files for imports to determine deps
 
@@ -368,7 +368,7 @@ Cross-package dependencies also help here <!-- .element: class="fragment" data-f
 
 <sub class="fragment" data-fragment-index="1"><sup>\* currently not realised because persistent worker is not merged yet</sub></sup>
 
-Notes:
+Note:
 not found in cabal or stack by default, jsem explains issues
 
 evidence: Facundo haskell_module on cabal builds faster than with cabal
@@ -391,7 +391,7 @@ Covers all sorts of generations, e.g. Elm types from Haskell definitions <!-- .e
 
 TODO: give more complete polyglot example?
 
-Notes:
+Note:
 annoying:
 * we end up writing additional tooling/scripts or remembering to run things manually
 * deps are not so precise, sometimes we can avoid recompiling when it's not actually needed,
@@ -415,7 +415,7 @@ Requires some hermeticity efforts <!-- .element: class="fragment" data-fragment-
 
 <p class="fragment" data-fragment-index="5"><code>stack</code>: none?</p>
 
-Notes:
+Note:
 
 focus for most of our clients
 
@@ -443,7 +443,7 @@ Again, hermeticity requirements
 
 cabal and stack have no support?
 
-Notes:
+Note:
 
 ---
 
@@ -471,7 +471,7 @@ Avoids ~80% of cases <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ["Recompilation Avoidance in rules_haskell"](https://www.tweag.io/blog/2022-11-03-blog_recompilation/) <!-- .element: class="fragment" data-fragment-index="4" -->
 
-Notes:
+Note:
 oneshot - compile only one file
 
 abi hash: determined by exposed implementation - export list + decl impls
@@ -494,7 +494,7 @@ Docs are massive <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Need to write rules eventually <!-- .element: class="fragment" data-fragment-index="4" -->
 
-Notes:
+Note:
 the language is python though, so np
 
 you need a bazel guy
@@ -507,7 +507,7 @@ no existing specific rules write your own hence need internal knowledge
 
 Yet another rare complex esoteric thing
 
-Notes:
+Note:
 Haskell steep learning curve and esoteric
 Bazel steep learning curve and esoteric
 
