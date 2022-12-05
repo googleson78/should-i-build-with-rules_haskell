@@ -12,6 +12,7 @@
         ''
           ${pkgs.nodePackages.reveal-md}/bin/reveal-md --static $out ${./present.md}
           cp ${./gazelle.jpg} $out/gazelle.jpg
+          cp ${./T_Mark.svg} $out/T_Mark.svg
         '';
       devShell.x86_64-linux = pkgs.mkShell
         {
