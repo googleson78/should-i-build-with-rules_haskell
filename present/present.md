@@ -389,6 +389,8 @@ Covers all sorts of generations, e.g. Elm types from Haskell definitions <!-- .e
 
 ["Converting a Polyglot Project Build to Bazel"](https://www.tweag.io/blog/2022-10-20-bazel-example-servant-elm-1/) <!-- .element: class="fragment" data-fragment-index="2" -->
 
+TODO: give more complete polyglot example?
+
 Notes:
 annoying:
 * we end up writing additional tooling/scripts or remembering to run things manually
