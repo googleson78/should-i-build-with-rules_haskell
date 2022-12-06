@@ -18,7 +18,8 @@ revealOptions:
     height:50%;
     width: 50%;
   }
-  .reveal .slide-background {
+
+  .reveal .slide-background-content {
     background-image: url(./T_Mark.svg);
     height: 50px;
     width: 50px;
