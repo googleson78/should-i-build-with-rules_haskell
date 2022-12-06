@@ -45,12 +45,22 @@ revealOptions:
 
 * matrix `@googleson78:tryp.io`
 
-* @tweag
+* @Tweag
 
 Note:
 ~One year of bazel at Tweag
+
 ~4-5 Haskell experience
+
 love to teach Haskell and Agda
+
+---
+
+What is `rules_haskell`?
+<p class="fragment" data-fragment-index="0">A Bazel extension for building Haskell</p>
+
+Notes:
+"let's first talk about bazel"
 
 ---
 
@@ -58,30 +68,40 @@ love to teach Haskell and Agda
 
 ----
 
-Bazel started out as the internal build tool at Google.
+_**Build tool**_ that started out internally at Google
 
+Therefore it has the following considerations:
 * many languages <!-- .element: class="fragment" data-fragment-index="0" -->
 * a huge monorepo <!-- .element: class="fragment" data-fragment-index="1" -->
 * very slow builds <!-- .element: class="fragment" data-fragment-index="2" -->
+* dev envs are unified  <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Note:
 
-many languages - polyglot
-huge monorepo - lazy evaluation of builds
-very slow builds - caching and RBE, determinism
+many languages - must be extensible, many extensions exist
 
-google has same dev env for engineers - managing system deps is/was not such a focus
+huge monorepo - lazy evaluation of builds
+
+very slow builds - caching and RBE
+
+managing system deps is not such a focus
 
 ----
 
 Bazel tries to be _**abstract**_
 
 <ul>
-  <li class="fragment" data-fragment-index="0">Not tied to any one language's build system.</li>
-  <li class="fragment" data-fragment-index="1">We can extend Bazel with support for different languages by implementing <em>rulesets</em>.</li>
+  <li class="fragment" data-fragment-index="0">Not tied to any one language's build system:
+    <ul>
+    <li class="fragment" data-fragment-index="1">dependencies (inputs)</li>
+    <li class="fragment" data-fragment-index="2">actions</li>
+    <li class="fragment" data-fragment-index="3">artifacts (outputs)</li>
+    </ul>
+  </li>
+  <li class="fragment" data-fragment-index="4">We can write Bazel extensions - <em>rulesets</em> - to add support for different languages.</li>
 </ul>
 
-<p class="fragment" data-fragment-index="2"> Bazel is <em><b>polyglot</b></em>.
+<p class="fragment" data-fragment-index="5"> Bazel is a <em><b>polyglot</b></em> build system.
 
 Note:
 
@@ -97,7 +117,7 @@ rulesets - rules_haskell
 Bazel tries to be _**declarative**_
 
 <ul>
-  <li class="fragment" data-fragment-index="1">Instead of a list of statements to execute, we build a graph of dependencies by using <em>rules</em>:
+  <li class="fragment" data-fragment-index="1">Instead of listing statements to execute, we build a dependency graph by using <em>rules</em> that define <em>targets</em>:
 
   ```starlark
   haskell_library(
@@ -110,28 +130,37 @@ Bazel tries to be _**declarative**_
     deps = [ ":lib" ],
   )
   ```
+  <!-- .element: class="fragment" data-fragment-index="2" -->
   ```
   bin -> lib
   ```
+  <!-- .element: class="fragment" data-fragment-index="3" -->
 
   </li>
-  <li class="fragment" data-fragment-index="2">All dependencies must be statically declared!\*
-  TODO: ^remove backslash here
-
-  \* except some builtin rules
+  <li class="fragment" data-fragment-index="4">All dependencies must be statically declared.*
   </li>
 </ul>
 
 Note:
 No manually specified order of execution
 
+rule:
+specifies how to go from input to output
+
+inputs may be files or outputs from other rules
+
+target:
+object that rules return, can be referred to via name
+
+* - builtin rules can be dynamic
+
 ----
 
 Bazel is _**artifact based**_
 <ul>
-  <li class="fragment" data-fragment-index="0">The main build requests you make are "please generate this artifact".</li>
-  <li class="fragment" data-fragment-index="1">Bazel will figure out exactly which things need to (and which <em>needn't</em>) be executed to produce your artifact.</li>
-  <li class="fragment" data-fragment-index="2">This is done by referencing <em>targets</em> grouped in <em>packages</em>
+  <li class="fragment" data-fragment-index="0">The main requests you make to Bazel are "please generate this artifact".</li>
+  <li class="fragment" data-fragment-index="1">Bazel will figure out the <b><em>exact</em></b> set of actions to run to produce your artifact.</li>
+  <li class="fragment" data-fragment-index="2">This is done by referencing <em>labels</em>
 
   ```python
   # contents of /path/to/package/BUILD.bazel
@@ -150,9 +179,13 @@ Bazel is _**artifact based**_
 Note:
 Effectively requesting nodes in our graph
 
-What is a package?
+exact - no more and no less
 
-What is a target?
+What is a label?
+package + target name
+
+What is a package?
+directory with BUILD.bazel file in it
 
 ----
 
@@ -180,6 +213,8 @@ Sandboxes - can only access declared inputs
 Note that the system is **not** sandboxed - we can refer (absolute path) to /usr/bin/whatever
 
 runtime dependencies get put inside sandbox when tests run
+
+injecting tools - can provide specific ghc/gcc/etc for the rule to run
 
 everything required:
 * tools
@@ -390,8 +425,6 @@ Covers all sorts of generations, e.g. Elm types from Haskell definitions <!-- .e
 
 ["Converting a Polyglot Project Build to Bazel"](https://www.tweag.io/blog/2022-10-20-bazel-example-servant-elm-1/) <!-- .element: class="fragment" data-fragment-index="2" -->
 
-TODO: give more complete polyglot example?
-
 Note:
 annoying:
 * we end up writing additional tooling/scripts or remembering to run things manually
@@ -434,15 +467,15 @@ cabal-cache: not very popular?
 
 ## Remote build execution
 
-Built into Bazel
+Built into Bazel <!-- .element: class="fragment" data-fragment-index="0" -->
 
-Alleviate developer machine stress and requirements
+Alleviate developer machine stress and requirements <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Speedup builds by offloading to beefy machines
+Speedup builds by offloading to beefy machines <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Again, hermeticity requirements
+Again, hermeticity requirements <!-- .element: class="fragment" data-fragment-index="3" -->
 
-cabal and stack have no support?
+cabal and stack have no support? <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Note:
 
@@ -525,11 +558,7 @@ Are the above crucial?
 
 ---
 
-## thanks
-
-TODO
-
----
+----
 
 ## nix?
 skip if no time, leave to q&a
@@ -540,3 +569,7 @@ currently evaluation appears to be too slow for the things discussed
 module level compilation and recompilation avoidance tooling doesn't exist, and might not soon, because of evaluation slowness
 
 e.g. haskell.nix currently doesn't aim to support incrementality, discussion - https://github.com/input-output-hk/haskell.nix/issues/866
+
+---
+
+## thanks :)
