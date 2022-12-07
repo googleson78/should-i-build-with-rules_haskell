@@ -182,10 +182,35 @@ Effectively requesting nodes in our graph
 exact - no more and no less
 
 What is a label?
-package + target name
+name of a target = package + name in rule
 
 What is a package?
 directory with BUILD.bazel file in it
+
+----
+
+Packages are organised in a _workspace_.
+
+```
+//
+├── WORKSPACE.bazel
+│
+└── path
+    └── to
+        ├── package
+        │   └── BUILD.bazel
+        └── another-package
+            └── BUILD.bazel
+```
+
+Note:
+Workspace == folder with WORKSPACE in it
+
+// refers to root
+
+Workspace pulls in external dependencies, such as rules_haskell
+
+packages in a single workspace can reference each other
 
 ----
 
