@@ -586,14 +586,14 @@ Are the above crucial?
 ----
 
 ## nix?
-skip if no time, leave to q&a
 
 offers *almost* all of the things we've discussed
 
-currently evaluation appears to be too slow for the things discussed
-module level compilation and recompilation avoidance tooling doesn't exist, and might not soon, because of evaluation slowness
+currently evaluation appears to be too slow
 
-e.g. haskell.nix currently doesn't aim to support incrementality, discussion - https://github.com/input-output-hk/haskell.nix/issues/866
+(maintained) module level compilation and recompilation avoidance tooling doesn't exist, and might not soon, because of evaluation slowness
+
+e.g. haskell.nix currently doesn't aim to support incrementality - https://github.com/input-output-hk/haskell.nix/issues/866
 
 ---
 
