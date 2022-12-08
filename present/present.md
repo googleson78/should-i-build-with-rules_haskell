@@ -258,6 +258,7 @@ Note:
 disclosure: by Tweag
 
 ----
+Rules:
 
 `haskell_{library,binary,test,doc,repl}`
 
@@ -296,6 +297,10 @@ data can be concrete file or another target, meaning the outputs from that targe
 ----
 
 `rules_haskell` has *repository rules* for making `ghc` available to Bazel.
+
+Notes:
+
+Repository rules = define things for the entire workspace
 
 ----
 
@@ -365,6 +370,8 @@ boilerplate - duplicating all the imports
 
 ----
 
+`gazelle`
+
 ![gazelle](./gazelle.jpg) <!-- .element class="gazelle" -->
 
 ----
@@ -387,7 +394,7 @@ both build systems: useful for tooling
 
 `gazelle_cabal`
 
-`gazelle` extension, allows `BUILD.bazel` files to be generated from `.cabal` files.
+`gazelle` extension; allows `BUILD.bazel` files to be generated from `.cabal` files.
 
 <p class="fragment" data-fragment-index="0"> Also updates <code>stack_snapshot</code></p>
 
@@ -401,7 +408,7 @@ works quite nicely to get you 90% of the way there, but not everything e.g. Setu
 
 `gazelle_haskell_modules`
 
-`gazelle` extension, automates the generation of `haskell_module` targets from existing `haskell_{library,binary,etc}` targets.
+`gazelle` extension; automates the generation of `haskell_module` targets from existing `haskell_{library,binary,etc}` targets.
 
 Note:
 
