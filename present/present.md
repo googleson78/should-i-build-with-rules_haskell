@@ -73,7 +73,7 @@ _**Build tool**_ that started out internally at Google
 Therefore it has the following considerations:
 * many languages <!-- .element: class="fragment" data-fragment-index="0" -->
 * a huge monorepo <!-- .element: class="fragment" data-fragment-index="1" -->
-* very slow builds <!-- .element: class="fragment" data-fragment-index="2" -->
+* slow builds <!-- .element: class="fragment" data-fragment-index="2" -->
 * dev envs are unified  <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Note:
@@ -147,12 +147,14 @@ No manually specified order of execution
 rule:
 specifies how to go from input to output
 
-inputs may be files or outputs from other rules
+inputs may be other targets
 
 target:
-object that rules return, can be referred to via name
+* file
+* "things" defined by other rules
+* misc stuff
 
-* - builtin rules can be dynamic
+\* - builtin rules can be dynamic
 
 ----
 
@@ -202,6 +204,8 @@ Packages are organised in a _workspace_.
         └── another-package
             └── BUILD.bazel
 ```
+
+<p class="fragment" data-fragment-index="0"> <code>WORKSPACE</code> contains <em>repository rules</em> to pull in external deps, e.g. system libs, compilers, etc.</p>
 
 Note:
 Workspace == folder with WORKSPACE in it
@@ -296,7 +300,7 @@ data can be concrete file or another target, meaning the outputs from that targe
 
 ----
 
-`rules_haskell` has *repository rules* for making `ghc` available to Bazel.
+`rules_haskell` has repository rules for making `ghc` available to Bazel.
 
 Notes:
 
@@ -582,7 +586,7 @@ Bazel steep learning curve and esoteric
 ## Checklist
 
 * do you have a huge code base which is already a monorepo or you are willing to convert to a monorepo? <!-- .element: class="fragment" data-fragment-index="0" -->
-* do you require caches to allow for comfortable switching between branches? <!-- .element: class="fragment" data-fragment-index="1" -->
+* do you require caches to allow for comfortable switching between branches and fast CI? <!-- .element: class="fragment" data-fragment-index="1" -->
 * do you want to have developers build on remote machines? <!-- .element: class="fragment" data-fragment-index="2" -->
 * are you extensively using more than just Haskell? <!-- .element: class="fragment" data-fragment-index="3" -->
 
